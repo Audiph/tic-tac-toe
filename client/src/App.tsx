@@ -3,6 +3,7 @@ import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Landing from './pages/Landing';
 import HomeLayout from './pages/HomeLayout';
+import Game from '@/pages/Game';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+      },
+      {
+        path: 'game/:id',
+        element: <Game />,
       },
     ],
   },
