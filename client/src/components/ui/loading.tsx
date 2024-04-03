@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Loading = ({ size }: { size: string }) => {
   return (
     <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
