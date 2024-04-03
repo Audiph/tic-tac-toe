@@ -25,7 +25,7 @@ import {
   TableHeader,
   TableRow,
 } from './ui/table';
-import { COLORS } from '@/App';
+import { COLORS } from '@/lib/constants';
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -70,10 +70,10 @@ const ScoreBoard = <TData, TValue>({
 
   return (
     <motion.div
-      className="w-11/12 max-w-full mx-auto py-4 rounded-md"
-      style={{ border, boxShadow }}
+      className="w-11/12 max-w-full mx-auto py-4 rounded-md inherit"
+      style={{ border, boxShadow, padding: 'inherit' }}
     >
-      <h1 className="text-center text-xl font-semibold leading-tight tracking-tighter md:text-6xl lg:leading-[1.1] text-balance">
+      <h1 className="my-8 text-center text-xl font-semibold leading-tight tracking-tighter md:text-6xl lg:leading-[1.1] text-balance">
         Score Board
       </h1>
       <div className="flex items-center py-4">
