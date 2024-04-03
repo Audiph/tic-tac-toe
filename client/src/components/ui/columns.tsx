@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import { CaretSortIcon } from '@radix-ui/react-icons';
 import { Button } from './button';
 
 // This type is used to define the shape of our data.
@@ -23,7 +23,7 @@ export const columns: ColumnDef<Score>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Player 1
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -37,7 +37,7 @@ export const columns: ColumnDef<Score>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Player 2
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -51,7 +51,7 @@ export const columns: ColumnDef<Score>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Score (Player 1)
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -65,7 +65,7 @@ export const columns: ColumnDef<Score>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Score (Player 2)
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -79,7 +79,7 @@ export const columns: ColumnDef<Score>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Draws
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
