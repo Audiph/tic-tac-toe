@@ -19,10 +19,11 @@ import {
   useMotionValue,
   animate,
 } from 'framer-motion';
-import { COLORS } from '@/lib/constants';
-import PlayersForm, { PlayersFormHandle } from '@/components/PlayersForm';
+import { COLORS, PlayersFormHandle } from '@/lib/constants';
 import { SubmitHandler } from 'react-hook-form';
 import { FormInput } from '@/lib/utils';
+import PlayersForm from '@/components/PlayersForm';
+
 const Landing = () => {
   const { games } = useSelector((state: RootState) => state.game);
   const color = useMotionValue(COLORS[0]);

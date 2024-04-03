@@ -1,17 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { CaretSortIcon } from '@radix-ui/react-icons';
 import { Button } from './button';
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Score = {
-  id: string;
-  playerOne: string;
-  playerTwo: string;
-  playerOneScore: number;
-  playerTwoScore: number;
-  draws: number;
-};
+import { Score } from '@/lib/constants';
 
 export const columns: ColumnDef<Score>[] = [
   {

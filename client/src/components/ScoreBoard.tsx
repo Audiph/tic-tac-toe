@@ -6,7 +6,6 @@ import {
 } from 'framer-motion';
 
 import {
-  ColumnDef,
   ColumnFiltersState,
   flexRender,
   getCoreRowModel,
@@ -25,15 +24,10 @@ import {
   TableHeader,
   TableRow,
 } from './ui/table';
-import { COLORS } from '@/lib/constants';
+import { COLORS, DataTableProps } from '@/lib/constants';
 import { useEffect, useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
-}
 
 const ScoreBoard = <TData, TValue>({
   columns,

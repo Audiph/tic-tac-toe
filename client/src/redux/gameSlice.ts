@@ -1,22 +1,9 @@
+import { Score } from '@/lib/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type GameState = {
-  games: Array<{
-    id: string;
-    playerOne: string;
-    playerTwo: string;
-    playerOneScore: number;
-    playerTwoScore: number;
-    draws: number;
-  }>;
-  game: {
-    id: string;
-    playerOne: string;
-    playerTwo: string;
-    playerOneScore: number;
-    playerTwoScore: number;
-    draws: number;
-  } | null;
+  games: Array<Score>;
+  game: Score | null;
 };
 
 export const gameSlice = createSlice({

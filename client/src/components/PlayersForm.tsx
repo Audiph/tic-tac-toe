@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -12,15 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { FormInput, formSchema } from '@/lib/utils';
 import { forwardRef, useImperativeHandle } from 'react';
-
-interface PlayersFormProps {
-  onSubmit: SubmitHandler<FormInput>;
-}
-
-// This interface defines the methods available on the ref object
-export interface PlayersFormHandle {
-  submitForm: () => void;
-}
+import { PlayersFormHandle, PlayersFormProps } from '@/lib/constants';
 
 const PlayersForm = forwardRef<PlayersFormHandle, PlayersFormProps>(
   ({ onSubmit }, ref) => {
