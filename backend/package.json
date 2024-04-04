@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "backend service for tic-tac-toe",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "npm run build && concurrently --kill-others \"tsc -w -p src\" \"nodemon dist/index.js -e ts\"",
     "start": "node dist/index.js",
