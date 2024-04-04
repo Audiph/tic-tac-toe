@@ -9,6 +9,11 @@ export interface Games extends Document {
   rounds: number;
 }
 
+export type GamesInput = {
+  player_one: string;
+  player_two: string;
+};
+
 export let GamesSchema: Schema = new Schema({
   player_one: {
     type: Schema.Types.String,
