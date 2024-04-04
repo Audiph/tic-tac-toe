@@ -1,13 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handler = void 0;
 const bodyParser = require("body-parser");
 const express = require("express");
 const logger = require("morgan");
 const path = require("path");
 const cors = require("cors");
 const helmet_1 = require("helmet");
-const serverless = require("serverless-http");
 const config_1 = require("../var/config");
 const helpers_1 = require("../helpers");
 const database_1 = require("../database");
@@ -30,6 +28,5 @@ for (const route of routes) {
     const { default: Route } = require(path.resolve(route));
     const _ = new Route(app);
 }
-exports.handler = serverless(app);
 exports.default = app;
 //# sourceMappingURL=index.js.map

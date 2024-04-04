@@ -3,8 +3,12 @@ require('dotenv').config();
 import * as http from 'http';
 import { DATABASE_URL, PORT } from './var/config';
 import app from './server';
+import * as awsServerlessExpress from 'aws-serverless-express';
+import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 
 const server: http.Server = http.createServer(app);
+
+const serverless = awsServerlessExpress.createServer(app);
 
 server.listen(PORT);
 
@@ -25,6 +29,10 @@ server.on('listening', () => {
     );
   }
 });
+
+exports.handler = (event: APIGatewayProxyEvent, context: Context) => {
+  awsServerlessExpress.proxy(serverless, event, context);
+};
 
 export default {
   server,
