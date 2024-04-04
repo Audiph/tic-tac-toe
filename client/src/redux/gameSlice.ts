@@ -1,40 +1,57 @@
-import { Score } from '@/lib/constants';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  ActionReducerMapBuilder,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
+import axios from 'axios';
+import { BASE_URL, Score } from '@/lib/constants';
+import { hideLoading, showLoading } from './utilSlice';
 
-type GameState = {
+interface GameState {
   games: Array<Score>;
   game: Score | null;
-};
+}
+
+export const getAllGames = createAsyncThunk<Score[]>(
+  'game/getAllGames',
+  async (_, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(showLoading());
+      const response = await axios.get(`${BASE_URL}/api/v1/games`);
+      thunkAPI.dispatch(hideLoading());
+
+      if (!response.data.success) {
+        return [];
+      }
+      return response.data.games as Score[];
+    } catch (error) {
+      console.error(error);
+      thunkAPI.dispatch(hideLoading());
+      return thunkAPI.rejectWithValue([]);
+    }
+  }
+);
 
 export const gameSlice = createSlice({
   name: 'game',
   initialState: {
-    games: [
-      {
-        id: 'asdawdad',
-        playerOne: 'John',
-        playerTwo: 'Jane',
-        playerOneScore: 3,
-        playerTwoScore: 2,
-        draws: 4,
-        rounds: 2,
-      },
-      {
-        id: 'testadawd',
-        playerOne: 'Mecca',
-        playerTwo: 'Jeff',
-        playerOneScore: 4,
-        playerTwoScore: 1,
-        draws: 9,
-        rounds: 3,
-      },
-    ],
+    games: [],
     game: null,
   },
   reducers: {
-    setGames: (state, action: PayloadAction<GameState['games']>) => {
+    setGames: (state: GameState, action: PayloadAction<GameState['games']>) => {
       state.games = action.payload;
     },
+  },
+
+  extraReducers: (builder: ActionReducerMapBuilder<GameState>) => {
+    builder.addCase(
+      getAllGames.fulfilled,
+      (state, action: PayloadAction<Score[]>) => {
+        state.games = action.payload; // Ensure payload is not undefined
+      }
+    );
   },
 });
 

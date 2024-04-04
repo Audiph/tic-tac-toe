@@ -11,10 +11,6 @@ import connect from '../database';
 
 const app: express.Express = express();
 
-const options: cors.CorsOptions = {
-  origin: true,
-};
-
 for (const model of globFiles(MODELS_DIR)) {
   require(path.resolve(model));
 }
@@ -29,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(Helmet());
 app.use(Helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
-app.use(cors(options));
+app.use(cors());
 
 const routes = globFiles(ROUTES_DIR);
 

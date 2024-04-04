@@ -40,8 +40,8 @@ export const COLORS = ['#13FFA', '#1E67C6', '#CE84CF', '#DD335C'];
 export const bottomBorder = 'border-b-4 border-solid border-sky-500';
 export const rightBorder = 'border-r-4 border-solid border-sky-500';
 
-export const PLAYER_ONE = 'X';
-export const PLAYER_TWO = 'O';
+export const playerOne = 'X';
+export const playerTwo = 'O';
 
 export const strikeRow1 = 'w-full h-[4px] top-[15%]';
 export const strikeRow2 = 'w-full h-[4px] top-[48%]';
@@ -70,3 +70,5 @@ export const winningCombinations = [
   { combo: [0, 4, 8], strikeClass: strikeDiagonal1 },
   { combo: [2, 4, 6], strikeClass: strikeDiagonal2 },
 ];
+
+export const BASE_URL = import.meta.env.VITE_GAME_API;

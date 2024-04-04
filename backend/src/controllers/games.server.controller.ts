@@ -8,9 +8,12 @@ export default class GamesController {
       const games = await Games.find();
       res.status(200).send({
         games,
+        success: true,
       });
     } catch (error) {
-      res.status(500).send({ message: 'Error fetching games.', error });
+      res
+        .status(500)
+        .send({ message: 'Error fetching games.', error, success: false });
     }
   }
 
@@ -22,9 +25,11 @@ export default class GamesController {
           return res.status(404).send({ message: 'Game not found.', err });
         });
 
-      res.status(200).send({ game });
+      res.status(200).send({ game, success: true });
     } catch (error) {
-      res.status(500).send({ message: 'Error fetching game.', error });
+      res
+        .status(500)
+        .send({ message: 'Error fetching game.', error, success: false });
     }
   }
 
@@ -33,29 +38,36 @@ export default class GamesController {
       const game = await Games.findByIdAndDelete(req.params.id)
         .then((result) => result)
         .catch((err) => {
-          return res.status(404).send({ message: 'Game not found.', err });
+          return res
+            .status(404)
+            .send({ message: 'Game not found.', err, success: false });
         });
 
-      res.status(200).send({ game });
+      res.status(200).send({ game, success: true });
     } catch (error) {
-      res.status(500).send({ message: 'Error updating game.', error });
+      res
+        .status(500)
+        .send({ message: 'Error updating game.', error, success: false });
     }
   }
 
   public async createGame(req: Request, res: Response) {
     try {
-      const { player_one, player_two }: GamesInput = req.body;
+      const { playerOne, playerTwo }: GamesInput = req.body;
 
       const newGame = new Games(req.body);
 
       const game = await newGame.save();
 
       res.status(201).send({
-        message: `New Game created for ${player_one} and ${player_two}`,
+        message: `New Game created for ${playerOne} and ${playerTwo}`,
         game,
+        success: true,
       });
     } catch (error) {
-      res.status(500).send({ message: 'Error creating match.', error });
+      res
+        .status(500)
+        .send({ message: 'Error creating match.', error, success: false });
     }
   }
 }

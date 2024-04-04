@@ -11,8 +11,8 @@ import {
 import { Fragment, useEffect, useRef } from 'react';
 import ScoreBoard from '@/components/ScoreBoard';
 import { columns } from '@/components/ui/columns';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/redux/store';
 import {
   motion,
   useMotionTemplate,
@@ -23,6 +23,7 @@ import { COLORS, PlayersFormHandle } from '@/lib/constants';
 import { SubmitHandler } from 'react-hook-form';
 import { FormInput } from '@/lib/constants';
 import PlayersForm from '@/components/PlayersForm';
+import { getAllGames } from '@/redux/gameSlice';
 
 const Landing = () => {
   const { games } = useSelector((state: RootState) => state.game);
@@ -32,6 +33,7 @@ const Landing = () => {
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
   const playersFormRef = useRef<PlayersFormHandle>(null);
+  const dispatch: AppDispatch = useDispatch();
 
   const handleStartGame = () => {
     if (playersFormRef.current) {
@@ -43,18 +45,9 @@ const Landing = () => {
     console.log(data);
   };
 
-  /* Later for GET all games API call */
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const result = await getData();
-  //       setData(result);
-  //     } catch (error) {
-  //       console.error('Failed to fetch data:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    dispatch(getAllGames());
+  }, [dispatch]);
 
   useEffect(() => {
     animate(color, COLORS, {

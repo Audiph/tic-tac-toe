@@ -1,36 +1,36 @@
 import { Document, Model, model, Schema } from 'mongoose';
 
 export interface Games extends Document {
-  player_one: string;
-  player_two: string;
-  player_one_score: number;
-  player_two_score: number;
+  playerOne: string;
+  playerTwo: string;
+  playerOneScore: number;
+  playerTwoScore: number;
   draws: number;
   rounds: number;
 }
 
 export type GamesInput = {
-  player_one: string;
-  player_two: string;
+  playerOne: string;
+  playerTwo: string;
 };
 
 export let GamesSchema: Schema = new Schema({
-  player_one: {
+  playerOne: {
     type: Schema.Types.String,
     required: true,
   },
 
-  player_two: {
+  playerTwo: {
     type: Schema.Types.String,
     required: true,
   },
 
-  player_one_score: {
+  playerOneScore: {
     type: Schema.Types.Number,
     default: 0,
   },
 
-  player_two_score: {
+  playerTwoScore: {
     type: Schema.Types.Number,
     default: 0,
   },

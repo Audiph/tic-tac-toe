@@ -4,9 +4,9 @@ import GameBoard from '@/components/GameBoard';
 import { Cross1Icon, CircleIcon } from '@radix-ui/react-icons';
 import { useEffect, useState } from 'react';
 import {
-  PLAYER_ONE,
+  playerOne,
   GridValue,
-  PLAYER_TWO,
+  playerTwo,
   winningCombinations,
 } from '@/lib/constants';
 import GameOver from '@/components/GameOver';
@@ -21,7 +21,7 @@ clickSound.volume = 0.5;
 
 const Game = () => {
   const [grids, setGrids] = useState<GridValue[]>(Array(9).fill(null));
-  const [playerTurn, setPlayerTurn] = useState<string>(PLAYER_ONE);
+  const [playerTurn, setPlayerTurn] = useState<string>(playerOne);
   const [strikeClass, setStrikeClass] = useState<string>('');
   const dispatch = useDispatch();
 
@@ -32,16 +32,16 @@ const Game = () => {
     newGrids[index] = playerTurn as GridValue;
     setGrids(newGrids);
 
-    if (playerTurn === PLAYER_ONE) {
-      setPlayerTurn(PLAYER_TWO);
+    if (playerTurn === playerOne) {
+      setPlayerTurn(playerTwo);
     } else {
-      setPlayerTurn(PLAYER_ONE);
+      setPlayerTurn(playerOne);
     }
   };
 
   const handleReset = () => {
     setGrids(Array(9).fill(null));
-    setPlayerTurn(PLAYER_ONE);
+    setPlayerTurn(playerOne);
     setStrikeClass('');
   };
 
