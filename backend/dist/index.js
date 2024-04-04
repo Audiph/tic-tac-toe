@@ -32,7 +32,7 @@ for (const route of routes) {
     const _ = new Route(app);
 }
 const serverless = awsServerlessExpress.createServer(app);
-serverless.listen(config_1.PORT);
+// serverless.listen(PORT);
 // serverless.on('error', (e: Error) => {
 //   console.log('Error starting server' + e);
 // });
