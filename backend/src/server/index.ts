@@ -4,6 +4,7 @@ import * as logger from 'morgan';
 import * as path from 'path';
 import * as cors from 'cors';
 import Helmet from 'helmet';
+import * as serverless from 'serverless-http';
 
 import { DATABASE_URL, MODELS_DIR, ROUTES_DIR } from '../var/config';
 import { globFiles } from '../helpers';
@@ -33,5 +34,7 @@ for (const route of routes) {
   const { default: Route } = require(path.resolve(route));
   const _ = new Route(app);
 }
+
+export const handler = serverless(app);
 
 export default app;
