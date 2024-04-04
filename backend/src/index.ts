@@ -6,17 +6,15 @@ import app from './server';
 import * as awsServerlessExpress from 'aws-serverless-express';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 
-const server: http.Server = http.createServer(app);
-
 const serverless = awsServerlessExpress.createServer(app);
 
-server.listen(PORT);
+serverless.listen(PORT);
 
-server.on('error', (e: Error) => {
+serverless.on('error', (e: Error) => {
   console.log('Error starting server' + e);
 });
 
-server.on('listening', () => {
+serverless.on('listening', () => {
   if (DATABASE_URL) {
     console.log(
       `Server started on port ${PORT} on env ${
