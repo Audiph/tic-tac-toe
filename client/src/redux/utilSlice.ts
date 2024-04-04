@@ -4,6 +4,8 @@ export const utilSlice = createSlice({
   name: 'util',
   initialState: {
     loading: false,
+    alert: false,
+    confetti: false,
   },
   reducers: {
     showLoading: (state) => {
@@ -13,7 +15,28 @@ export const utilSlice = createSlice({
     hideLoading: (state) => {
       state.loading = false;
     },
+    showAlert: (state) => {
+      state.alert = true;
+    },
+
+    hideAlert: (state) => {
+      state.alert = false;
+    },
+    showConfetti: (state) => {
+      state.confetti = true;
+    },
+
+    hideConfetti: (state) => {
+      state.confetti = false;
+    },
   },
 });
 
-export const { showLoading, hideLoading } = utilSlice.actions;
+export const {
+  showLoading,
+  hideLoading,
+  showAlert,
+  hideAlert,
+  showConfetti,
+  hideConfetti,
+} = utilSlice.actions;

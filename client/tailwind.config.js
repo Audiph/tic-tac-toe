@@ -20,7 +20,7 @@ module.exports = {
     extend: {
       skew: {
         45: '45deg',
-        '-45': '-45deg',
+        50: '-45deg',
       },
       gridTemplateRows: {
         'mini-layout': '100px 100px 100px',

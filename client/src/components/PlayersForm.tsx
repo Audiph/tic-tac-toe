@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { FormInput, formSchema } from '@/lib/utils';
+import { FormInput, formSchema } from '@/lib/constants';
 import { forwardRef, useImperativeHandle } from 'react';
 import { PlayersFormHandle, PlayersFormProps } from '@/lib/constants';
 

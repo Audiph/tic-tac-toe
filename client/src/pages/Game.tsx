@@ -2,13 +2,28 @@ import { motion } from 'framer-motion';
 import Player from '@/components/Player';
 import GameBoard from '@/components/GameBoard';
 import { Cross1Icon, CircleIcon } from '@radix-ui/react-icons';
-import { useState } from 'react';
-import { PLAYER_ONE, GridValue, PLAYER_TWO } from '@/lib/constants';
+import { useEffect, useState } from 'react';
+import {
+  PLAYER_ONE,
+  GridValue,
+  PLAYER_TWO,
+  winningCombinations,
+} from '@/lib/constants';
+import GameOver from '@/components/GameOver';
+import Confetti from '@/components/ui/confetti';
+import { useDispatch } from 'react-redux';
+import { showAlert, showConfetti } from '@/redux/utilSlice';
+
+const gameOverSound = new Audio('/game_over.wav');
+gameOverSound.volume = 0.2;
+const clickSound = new Audio('/click.wav');
+clickSound.volume = 0.5;
 
 const Game = () => {
   const [grids, setGrids] = useState<GridValue[]>(Array(9).fill(null));
   const [playerTurn, setPlayerTurn] = useState<string>(PLAYER_ONE);
   const [strikeClass, setStrikeClass] = useState<string>('');
+  const dispatch = useDispatch();
 
   const handleGridClick = (index: number) => {
     if (grids[index] !== null) return;
@@ -23,6 +38,58 @@ const Game = () => {
       setPlayerTurn(PLAYER_ONE);
     }
   };
+
+  const handleReset = () => {
+    setGrids(Array(9).fill(null));
+    setPlayerTurn(PLAYER_ONE);
+    setStrikeClass('');
+  };
+
+  useEffect(() => {
+    const checkWinner = (
+      grids: GridValue[],
+      setStrike: (strikeClass: string) => void
+    ) => {
+      for (const { combo, strikeClass } of winningCombinations) {
+        const gridValue1 = grids![combo[0]];
+        const gridValue2 = grids![combo[1]];
+        const gridValue3 = grids![combo[2]];
+
+        if (
+          gridValue1 !== null &&
+          gridValue1 === gridValue2 &&
+          gridValue1 === gridValue3
+        ) {
+          setStrike(strikeClass);
+          dispatch(showConfetti());
+          dispatch(showAlert());
+          gameOverSound.play();
+          // Reset the confetti after a short delay
+          setTimeout(() => {
+            dispatch(showConfetti());
+          }, 3000);
+          // if (gridValue1 === PLAYER_X) {
+          //   setGameState(GameState.playerXWins);
+          // } else {
+          //   setGameState(GameState.playerOWins);
+          // }
+          return;
+        }
+      }
+
+      const allGridsFilled = grids.every((grid) => grid !== null);
+      if (allGridsFilled) {
+        dispatch(showAlert());
+        gameOverSound.play();
+      }
+    };
+
+    checkWinner(grids, setStrikeClass);
+  }, [grids]);
+
+  useEffect(() => {
+    if (grids.some((grid) => grid !== null)) clickSound.play();
+  }, [grids]);
 
   return (
     <div className="container h-[calc(100vh-6rem)] flex max-w-4xl mx-auto my-12 flex-col gap-32 items-center justify-start bg-blue-0 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-0 border border-gray-100 p-8 font-bold shadow-lg">
@@ -54,6 +121,8 @@ const Game = () => {
           strikeClass={strikeClass}
         />
       </div>
+      <GameOver onReset={handleReset} />
+      <Confetti />
     </div>
   );
 };

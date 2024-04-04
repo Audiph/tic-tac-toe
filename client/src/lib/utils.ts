@@ -1,14 +1,15 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { z } from 'zod';
+import { COLOR_DIGIT } from './constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const formSchema = z.object({
-  playerOne: z.string().min(3).max(50),
-  playerTwo: z.string().min(3).max(50),
-});
-
-export type FormInput = z.infer<typeof formSchema>;
+export const generateRandomColor = () => {
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += COLOR_DIGIT[Math.floor(Math.random() * COLOR_DIGIT.length)];
+  }
+  return color;
+};

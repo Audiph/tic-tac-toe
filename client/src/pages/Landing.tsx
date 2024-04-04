@@ -21,7 +21,7 @@ import {
 } from 'framer-motion';
 import { COLORS, PlayersFormHandle } from '@/lib/constants';
 import { SubmitHandler } from 'react-hook-form';
-import { FormInput } from '@/lib/utils';
+import { FormInput } from '@/lib/constants';
 import PlayersForm from '@/components/PlayersForm';
 
 const Landing = () => {

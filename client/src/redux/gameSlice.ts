@@ -17,6 +17,7 @@ export const gameSlice = createSlice({
         playerOneScore: 3,
         playerTwoScore: 2,
         draws: 4,
+        rounds: 2,
       },
       {
         id: 'testadawd',
@@ -25,6 +26,7 @@ export const gameSlice = createSlice({
         playerOneScore: 4,
         playerTwoScore: 1,
         draws: 9,
+        rounds: 3,
       },
     ],
     game: null,
