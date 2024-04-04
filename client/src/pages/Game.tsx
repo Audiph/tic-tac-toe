@@ -11,8 +11,11 @@ import {
 } from '@/lib/constants';
 import GameOver from '@/components/GameOver';
 import Confetti from '@/components/ui/confetti';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { showAlert, showConfetti } from '@/redux/utilSlice';
+import { AppDispatch, RootState } from '@/redux/store';
+import { useNavigate } from 'react-router-dom';
+import { incrementRounds } from '@/redux/gameSlice';
 
 const gameOverSound = new Audio('/game_over.wav');
 gameOverSound.volume = 0.2;
@@ -20,10 +23,12 @@ const clickSound = new Audio('/click.wav');
 clickSound.volume = 0.5;
 
 const Game = () => {
+  const { game } = useSelector((state: RootState) => state.game);
   const [grids, setGrids] = useState<GridValue[]>(Array(9).fill(null));
   const [playerTurn, setPlayerTurn] = useState<string>(playerOne);
   const [strikeClass, setStrikeClass] = useState<string>('');
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
 
   const handleGridClick = (index: number) => {
     if (grids[index] !== null) return;
@@ -43,9 +48,15 @@ const Game = () => {
     setGrids(Array(9).fill(null));
     setPlayerTurn(playerOne);
     setStrikeClass('');
+    dispatch(incrementRounds());
   };
 
   useEffect(() => {
+    if (!game) navigate('/');
+  }, [navigate, game]);
+
+  useEffect(() => {
+    console.log(game);
     const checkWinner = (
       grids: GridValue[],
       setStrike: (strikeClass: string) => void
@@ -94,7 +105,12 @@ const Game = () => {
   return (
     <div className="container h-[calc(100vh-6rem)] flex max-w-4xl mx-auto my-12 flex-col gap-32 items-center justify-start bg-blue-0 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-0 border border-gray-100 p-8 font-bold shadow-lg">
       <div className="flex flex-col p-8 gap-6 justify-between items-center w-full md:flex-row md:gap-0">
-        <Player description="Jane is playing" icon={<Cross1Icon />} />
+        <Player
+          description={`${game?.playerOne} is playing`}
+          icon={<Cross1Icon />}
+          playerScore={game?.playerOneScore}
+          draws={game?.draws}
+        />
         <motion.div
           style={{
             width: 50,
@@ -111,7 +127,12 @@ const Game = () => {
         >
           <h1 className="text-xl fixed">VS</h1>
         </motion.div>
-        <Player description="John is playing" icon={<CircleIcon />} />
+        <Player
+          description={`${game?.playerTwo} is playing`}
+          icon={<CircleIcon />}
+          playerScore={game?.playerTwoScore}
+          draws={game?.draws}
+        />
       </div>
       <div className="pt-8 md:pt-32">
         <GameBoard

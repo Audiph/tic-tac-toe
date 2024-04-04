@@ -12,7 +12,7 @@ export type FormInput = z.infer<typeof formSchema>;
 export type GridValue = 'X' | 'O' | null;
 
 export type Score = {
-  id: string;
+  _id: string;
   playerOne: string;
   playerTwo: string;
   playerOneScore: number;

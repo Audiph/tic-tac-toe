@@ -11,6 +11,7 @@ import { hideLoading, showLoading } from './utilSlice';
 interface GameState {
   games: Array<Score>;
   game: Score | null;
+  winner: string;
 }
 
 export const getAllGames = createAsyncThunk<Score[]>(
@@ -38,10 +39,38 @@ export const gameSlice = createSlice({
   initialState: {
     games: [],
     game: null,
-  },
+    winner: '',
+  } as GameState,
   reducers: {
     setGames: (state: GameState, action: PayloadAction<GameState['games']>) => {
       state.games = action.payload;
+    },
+
+    setGame: (state: GameState, action: PayloadAction<GameState['game']>) => {
+      state.game = action.payload;
+    },
+
+    setWinner: (
+      state: GameState,
+      action: PayloadAction<GameState['winner']>
+    ) => {
+      state.winner = action.payload;
+    },
+
+    incrementPlayerOneScore: (state: GameState) => {
+      if (state.game) state.game.playerOneScore += 1;
+    },
+
+    incrementPlayerTwoScore: (state: GameState) => {
+      if (state.game) state.game.playerTwoScore += 1;
+    },
+
+    incrementDraws: (state: GameState) => {
+      if (state.game) state.game.draws += 1;
+    },
+
+    incrementRounds: (state: GameState) => {
+      if (state.game) state.game.rounds += 1;
     },
   },
 
@@ -55,4 +84,12 @@ export const gameSlice = createSlice({
   },
 });
 
-export const { setGames } = gameSlice.actions;
+export const {
+  setGames,
+  setGame,
+  setWinner,
+  incrementDraws,
+  incrementPlayerOneScore,
+  incrementPlayerTwoScore,
+  incrementRounds,
+} = gameSlice.actions;

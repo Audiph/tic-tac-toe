@@ -19,21 +19,28 @@ import {
   useMotionValue,
   animate,
 } from 'framer-motion';
-import { COLORS, PlayersFormHandle } from '@/lib/constants';
+import { BASE_URL, COLORS, PlayersFormHandle, Score } from '@/lib/constants';
 import { SubmitHandler } from 'react-hook-form';
 import { FormInput } from '@/lib/constants';
 import PlayersForm from '@/components/PlayersForm';
-import { getAllGames } from '@/redux/gameSlice';
+import { useToast } from '@/components/ui/use-toast';
+import { getAllGames, setGame } from '@/redux/gameSlice';
+import { hideLoading, showLoading } from '@/redux/utilSlice';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Landing = () => {
+  const { loading } = useSelector((state: RootState) => state.util);
   const { games } = useSelector((state: RootState) => state.game);
   const color = useMotionValue(COLORS[0]);
+  const { toast } = useToast();
   const backgroundImageHero = useMotionTemplate`radial-gradient(125% 125% at 50% 100%, transparent 50%, ${color})`;
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
   const playersFormRef = useRef<PlayersFormHandle>(null);
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleStartGame = () => {
     if (playersFormRef.current) {
@@ -41,8 +48,34 @@ const Landing = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    dispatch(showLoading());
+    try {
+      const res = await axios.post(`${BASE_URL}/api/v1/game`, data);
+
+      if (!res.data.success) {
+        toast({
+          title: "Something's wrong",
+          description: res.data.message,
+        });
+        dispatch(hideLoading());
+        return;
+      }
+
+      const { _id }: Score = res.data.game;
+
+      console.log('here:', _id, res.data);
+
+      dispatch(setGame(res.data.game));
+      dispatch(hideLoading());
+      navigate(`/game/${_id}`);
+    } catch (error) {
+      dispatch(hideLoading());
+      toast({
+        title: "Something's wrong!",
+        description: "There's an error while creating a game.",
+      });
+    }
   };
 
   useEffect(() => {
@@ -90,7 +123,11 @@ const Landing = () => {
               {/* Content */}
               <PlayersForm onSubmit={onSubmit} ref={playersFormRef} />
               <DialogFooter>
-                <Button type="button" onClick={handleStartGame}>
+                <Button
+                  disabled={loading}
+                  type="button"
+                  onClick={handleStartGame}
+                >
                   Start Game
                 </Button>
               </DialogFooter>

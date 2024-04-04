@@ -9,13 +9,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { RootState } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import { hideAlert } from '@/redux/utilSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const GameOver = ({ onReset }: { onReset: () => void }) => {
   const { alert } = useSelector((state: RootState) => state.util);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   return (
     <AlertDialog open={alert}>
@@ -33,15 +33,13 @@ const GameOver = ({ onReset }: { onReset: () => void }) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="justify-self-center gap-4 md:gap-12">
-          <AlertDialogCancel
+          <AlertDialogCancel>Exit</AlertDialogCancel>
+          <AlertDialogAction
             onClick={() => {
               dispatch(hideAlert());
               onReset();
             }}
           >
-            Exit
-          </AlertDialogCancel>
-          <AlertDialogAction onClick={() => dispatch(hideAlert())}>
             Rematch
           </AlertDialogAction>
         </AlertDialogFooter>

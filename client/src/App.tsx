@@ -4,12 +4,13 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Landing from './pages/Landing';
 import HomeLayout from './pages/HomeLayout';
 import Game from '@/pages/Game';
+import Error from '@/pages/Error';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomeLayout />,
-    errorElement: <h1>Error</h1>,
+    errorElement: <Error />,
     children: [
       {
         index: true,

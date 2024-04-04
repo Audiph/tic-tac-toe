@@ -18,11 +18,15 @@ export let GamesSchema: Schema = new Schema({
   playerOne: {
     type: Schema.Types.String,
     required: true,
+    minLength: 3,
+    maxLength: 50,
   },
 
   playerTwo: {
     type: Schema.Types.String,
     required: true,
+    minLength: 3,
+    maxLength: 50,
   },
 
   playerOneScore: {
@@ -42,7 +46,7 @@ export let GamesSchema: Schema = new Schema({
 
   rounds: {
     type: Schema.Types.Number,
-    default: 0,
+    default: 1,
   },
 });
 
