@@ -33,7 +33,3 @@ server.on('listening', () => {
 exports.handler = (event: APIGatewayProxyEvent, context: Context) => {
   awsServerlessExpress.proxy(serverless, event, context);
 };
-
-export default {
-  server,
-};
