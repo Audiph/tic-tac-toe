@@ -1,30 +1,32 @@
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import * as logger from 'morgan';
-import * as path from 'path';
-import * as cors from 'cors';
-import Helmet from 'helmet';
-import { DATABASE_URL, MODELS_DIR, ROUTES_DIR } from '../var/config';
-import { globFiles } from '../helpers';
-import connect from '../database';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const bodyParser = require("body-parser");
+const express = require("express");
+const logger = require("morgan");
+const path = require("path");
+const cors = require("cors");
+const helmet_1 = require("helmet");
+const config_1 = require("../var/config");
+const helpers_1 = require("../helpers");
+const database_1 = require("../database");
 const app = express();
-for (const model of globFiles(MODELS_DIR)) {
+for (const model of (0, helpers_1.globFiles)(config_1.MODELS_DIR)) {
     require(path.resolve(model));
 }
-if (DATABASE_URL) {
-    connect(DATABASE_URL);
+if (config_1.DATABASE_URL) {
+    (0, database_1.default)(config_1.DATABASE_URL);
 }
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(Helmet());
-app.use(Helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+app.use((0, helmet_1.default)());
+app.use(helmet_1.default.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use(cors());
-const routes = globFiles(ROUTES_DIR);
+const routes = (0, helpers_1.globFiles)(config_1.ROUTES_DIR);
 for (const route of routes) {
     const { default: Route } = require(path.resolve(route));
     const _ = new Route(app);
 }
-export default app;
+exports.default = app;
 //# sourceMappingURL=index.js.map

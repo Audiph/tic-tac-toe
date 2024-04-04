@@ -1,22 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable-next-line */
 require('dotenv').config();
-import * as http from 'http';
-import { DATABASE_URL, PORT } from './var/config';
-import app from './server';
-const server = http.createServer(app);
-server.listen(PORT);
+const http = require("http");
+const config_1 = require("./var/config");
+const server_1 = require("./server");
+const server = http.createServer(server_1.default);
+server.listen(config_1.PORT);
 server.on('error', (e) => {
     console.log('Error starting server' + e);
 });
 server.on('listening', () => {
-    if (DATABASE_URL) {
-        console.log(`Server started on port ${PORT} on env ${process.env.NODE_ENV || 'dev'} dbcon ${DATABASE_URL}`);
+    if (config_1.DATABASE_URL) {
+        console.log(`Server started on port ${config_1.PORT} on env ${process.env.NODE_ENV || 'dev'} dbcon ${config_1.DATABASE_URL}`);
     }
     else {
-        console.log(`Server started on port ${PORT} on env ${process.env.NODE_ENV || 'dev'}`);
+        console.log(`Server started on port ${config_1.PORT} on env ${process.env.NODE_ENV || 'dev'}`);
     }
 });
-export default {
+exports.default = {
     server,
 };
 //# sourceMappingURL=index.js.map
