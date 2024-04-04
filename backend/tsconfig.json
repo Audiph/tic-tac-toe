@@ -6,7 +6,6 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "outDir": "dist",
     "target": "ES2017",
     "types": ["node"],
     "typeRoots": ["node_modules/@types"],
