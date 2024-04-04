@@ -22,7 +22,9 @@ export default class GamesController {
       const game = await Games.findById(req.params.id)
         .then((result) => result)
         .catch((err) => {
-          return res.status(404).send({ message: 'Game not found.', err });
+          return res
+            .status(404)
+            .send({ message: 'Game not found.', err, success: false });
         });
 
       res.status(200).send({ game, success: true });
@@ -68,6 +70,21 @@ export default class GamesController {
       res
         .status(500)
         .send({ message: 'Error creating match.', error, success: false });
+    }
+  }
+
+  public async updateGame(req: Request, res: Response) {
+    try {
+      const { playerOne, playerTwo }: GamesInput = req.body;
+
+      const updatedGame = await Games.findByIdAndUpdate(
+        req.params.id,
+        req.body
+      );
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: 'Error updating match.', error, success: false });
     }
   }
 }

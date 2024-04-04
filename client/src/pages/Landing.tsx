@@ -64,8 +64,6 @@ const Landing = () => {
 
       const { _id }: Score = res.data.game;
 
-      console.log('here:', _id, res.data);
-
       dispatch(setGame(res.data.game));
       dispatch(hideLoading());
       navigate(`/game/${_id}`);

@@ -21,10 +21,12 @@ const Player: React.FC<PlayerProps> = ({
       </CardHeader>
       <CardContent className="flex justify-center items-center gap-6">
         <span>
-          <strong>Wins: </strong>${playerScore || 0}
+          <strong>Wins: </strong>
+          {playerScore || 0}
         </span>
         <span>
-          <strong>Draws: </strong>${draws || 0}
+          <strong>Draws: </strong>
+          {draws || 0}
         </span>
       </CardContent>
     </Card>

@@ -61,6 +61,20 @@ export const columns: ColumnDef<Score>[] = [
     },
   },
   {
+    accessorKey: 'rounds',
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Rounds
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: 'draws',
     header: ({ column }) => {
       return (

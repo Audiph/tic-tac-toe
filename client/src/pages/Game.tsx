@@ -15,7 +15,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showAlert, showConfetti } from '@/redux/utilSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { useNavigate } from 'react-router-dom';
-import { incrementRounds } from '@/redux/gameSlice';
+import {
+  incrementDraws,
+  incrementPlayerOneScore,
+  incrementPlayerTwoScore,
+  incrementRounds,
+  setWinner,
+} from '@/redux/gameSlice';
 
 const gameOverSound = new Audio('/game_over.wav');
 gameOverSound.volume = 0.2;
@@ -49,6 +55,7 @@ const Game = () => {
     setPlayerTurn(playerOne);
     setStrikeClass('');
     dispatch(incrementRounds());
+    dispatch(setWinner(''));
   };
 
   useEffect(() => {
@@ -56,7 +63,6 @@ const Game = () => {
   }, [navigate, game]);
 
   useEffect(() => {
-    console.log(game);
     const checkWinner = (
       grids: GridValue[],
       setStrike: (strikeClass: string) => void
@@ -79,11 +85,14 @@ const Game = () => {
           setTimeout(() => {
             dispatch(showConfetti());
           }, 3000);
-          // if (gridValue1 === PLAYER_X) {
-          //   setGameState(GameState.playerXWins);
-          // } else {
-          //   setGameState(GameState.playerOWins);
-          // }
+
+          if (gridValue1 === playerOne) {
+            dispatch(incrementPlayerOneScore());
+            dispatch(setWinner(game!.playerOne));
+          } else {
+            dispatch(incrementPlayerTwoScore());
+            dispatch(setWinner(game!.playerTwo));
+          }
           return;
         }
       }
@@ -91,6 +100,7 @@ const Game = () => {
       const allGridsFilled = grids.every((grid) => grid !== null);
       if (allGridsFilled) {
         dispatch(showAlert());
+        dispatch(incrementDraws());
         gameOverSound.play();
       }
     };
@@ -103,7 +113,7 @@ const Game = () => {
   }, [grids]);
 
   return (
-    <div className="container h-[calc(100vh-6rem)] flex max-w-4xl mx-auto my-12 flex-col gap-32 items-center justify-start bg-blue-0 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-0 border border-gray-100 p-8 font-bold shadow-lg">
+    <div className="container h-[calc(100vh-6rem)] flex max-w-4xl mx-auto my-12 flex-col gap-32 items-center justify-center bg-blue-0 rounded-lg bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-0 border border-gray-100 p-8 font-bold shadow-lg">
       <div className="flex flex-col p-8 gap-6 justify-between items-center w-full md:flex-row md:gap-0">
         <Player
           description={`${game?.playerOne} is playing`}
@@ -142,6 +152,9 @@ const Game = () => {
           strikeClass={strikeClass}
         />
       </div>
+      <h2 className="mt-10 scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+        Round {game?.rounds}
+      </h2>
       <GameOver onReset={handleReset} />
       <Confetti />
     </div>
