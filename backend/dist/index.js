@@ -23,4 +23,5 @@ server.on('listening', () => {
 exports.handler = (event, context) => {
     awsServerlessExpress.proxy(serverless, event, context);
 };
+exports.default = serverless;
 //# sourceMappingURL=index.js.map
