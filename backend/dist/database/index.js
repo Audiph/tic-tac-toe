@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose = require("mongoose");
-exports.default = (uri) => {
+import * as mongoose from 'mongoose';
+export default (uri) => {
     try {
         mongoose.connect(uri);
     }

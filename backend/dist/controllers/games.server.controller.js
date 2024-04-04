@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.gamesController = void 0;
-const games_model_1 = require("../models/games.model");
-class GamesController {
+import { Games } from '../models/games.model';
+export default class GamesController {
     async getAllGames(_, res) {
         try {
-            const games = await games_model_1.Games.find();
+            const games = await Games.find();
             res.status(200).send({
                 games,
                 success: true,
@@ -19,7 +16,7 @@ class GamesController {
     }
     async getGameById(req, res) {
         try {
-            const game = await games_model_1.Games.findById(req.params.id)
+            const game = await Games.findById(req.params.id)
                 .then((result) => result)
                 .catch((err) => {
                 return res
@@ -36,7 +33,7 @@ class GamesController {
     }
     async deleteGame(req, res) {
         try {
-            const game = await games_model_1.Games.findByIdAndDelete(req.params.id)
+            const game = await Games.findByIdAndDelete(req.params.id)
                 .then((result) => result)
                 .catch((err) => {
                 return res
@@ -54,7 +51,7 @@ class GamesController {
     async createGame(req, res) {
         try {
             const { playerOne, playerTwo } = req.body;
-            const newGame = new games_model_1.Games(req.body);
+            const newGame = new Games(req.body);
             const game = await newGame.save();
             res.status(201).send({
                 message: `New Game created for ${playerOne} and ${playerTwo}`,
@@ -71,7 +68,7 @@ class GamesController {
     async updateGame(req, res) {
         try {
             const { playerOne, playerTwo } = req.body;
-            const updatedGame = await games_model_1.Games.findByIdAndUpdate(req.params.id, req.body);
+            const updatedGame = await Games.findByIdAndUpdate(req.params.id, req.body);
         }
         catch (error) {
             res
@@ -80,6 +77,5 @@ class GamesController {
         }
     }
 }
-exports.default = GamesController;
-exports.gamesController = new GamesController();
+export const gamesController = new GamesController();
 //# sourceMappingURL=games.server.controller.js.map

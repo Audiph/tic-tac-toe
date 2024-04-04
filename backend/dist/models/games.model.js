@@ -1,36 +1,33 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Games = exports.GamesSchema = void 0;
-const mongoose_1 = require("mongoose");
-exports.GamesSchema = new mongoose_1.Schema({
+import { model, Schema } from 'mongoose';
+export let GamesSchema = new Schema({
     playerOne: {
-        type: mongoose_1.Schema.Types.String,
+        type: Schema.Types.String,
         required: true,
         minLength: 3,
         maxLength: 50,
     },
     playerTwo: {
-        type: mongoose_1.Schema.Types.String,
+        type: Schema.Types.String,
         required: true,
         minLength: 3,
         maxLength: 50,
     },
     playerOneScore: {
-        type: mongoose_1.Schema.Types.Number,
+        type: Schema.Types.Number,
         default: 0,
     },
     playerTwoScore: {
-        type: mongoose_1.Schema.Types.Number,
+        type: Schema.Types.Number,
         default: 0,
     },
     draws: {
-        type: mongoose_1.Schema.Types.Number,
+        type: Schema.Types.Number,
         default: 0,
     },
     rounds: {
-        type: mongoose_1.Schema.Types.Number,
+        type: Schema.Types.Number,
         default: 1,
     },
 });
-exports.Games = (0, mongoose_1.model)('games', exports.GamesSchema);
+export const Games = model('games', GamesSchema);
 //# sourceMappingURL=games.model.js.map
