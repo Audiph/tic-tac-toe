@@ -1,18 +1,26 @@
 import { GridValue } from '@/lib/constants';
 
 interface GridProps {
+  currentPlayer: string;
   className: string;
   value: GridValue;
   onClick: () => void;
 }
 
-const Grid = ({ className, value, onClick }: GridProps) => {
+const Grid = ({ currentPlayer, className, value, onClick }: GridProps) => {
+  let hoverClass = null;
+
+  console.log(currentPlayer);
+
+  if (value === null && currentPlayer !== null) {
+    hoverClass = 'grid-cell hover:opacity-40';
+  }
+
   return (
     <div
       onClick={onClick}
-      className={`flex justify-center items-center ${
-        !value ? 'p-10 md:p-16' : 'p-10 text-2xl md:text-6xl'
-      } ${className}`}
+      className={`flex justify-center items-center text-3xl md:text-6xl ${className} ${hoverClass}`}
+      data-player={`${currentPlayer}`}
     >
       {value}
     </div>

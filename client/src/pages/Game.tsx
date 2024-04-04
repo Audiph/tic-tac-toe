@@ -3,14 +3,24 @@ import Player from '@/components/Player';
 import GameBoard from '@/components/GameBoard';
 import { Cross1Icon, CircleIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
-import { PLAYER_ONE, GridValue } from '@/lib/constants';
+import { PLAYER_ONE, GridValue, PLAYER_TWO } from '@/lib/constants';
 
 const Game = () => {
   const [grids, setGrids] = useState<GridValue[]>(Array(9).fill(null));
-  const [playerTurn, setPlayerTurn] = useState(PLAYER_ONE);
+  const [playerTurn, setPlayerTurn] = useState<string>(PLAYER_ONE);
 
   const handleGridClick = (index: number) => {
-    console.log(index);
+    if (grids[index] !== null) return;
+
+    const newGrids = [...grids];
+    newGrids[index] = playerTurn as GridValue;
+    setGrids(newGrids);
+
+    if (playerTurn === PLAYER_ONE) {
+      setPlayerTurn(PLAYER_TWO);
+    } else {
+      setPlayerTurn(PLAYER_ONE);
+    }
   };
 
   return (
@@ -36,7 +46,11 @@ const Game = () => {
         <Player description="John is playing" icon={<CircleIcon />} />
       </div>
       <div className="pt-8 md:pt-32">
-        <GameBoard grids={grids} onGridClick={handleGridClick} />
+        <GameBoard
+          currentPlayer={playerTurn}
+          grids={grids}
+          onGridClick={handleGridClick}
+        />
       </div>
     </div>
   );

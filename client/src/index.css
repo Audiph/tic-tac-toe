@@ -107,4 +107,14 @@
     scrollbar-width: thin; /* Makes the scrollbar thin */
     scrollbar-color: rgba(55, 65, 81, 0.5) transparent; /* Scrollbar handle and track color */
   }
+
+  .grid-cell::before {
+    content: attr(data-player);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .grid-cell:hover::before {
+    opacity: 0.4;
+  }
 }

@@ -18,6 +18,14 @@ module.exports = {
       },
     },
     extend: {
+      gridTemplateRows: {
+        'mini-layout': '100px 100px 100px',
+        layout: '150px 150px 150px',
+      },
+      gridTemplateColumns: {
+        'mini-layout': '100px 100px 100px',
+        layout: '150px 150px 150px',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
