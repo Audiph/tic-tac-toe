@@ -34,11 +34,11 @@ for (const route of routes) {
 }
 const server = http.createServer(app);
 const serverless = awsServerlessExpress.createServer(app);
-server.listen(config_1.PORT);
-server.on('error', (e) => {
+serverless.listen(config_1.PORT);
+serverless.on('error', (e) => {
     console.log('Error starting server' + e);
 });
-server.on('listening', () => {
+serverless.on('listening', () => {
     if (config_1.DATABASE_URL) {
         console.log(`Server started on port ${config_1.PORT} on env ${process.env.NODE_ENV || 'dev'} dbcon ${config_1.DATABASE_URL}`);
     }
@@ -49,5 +49,5 @@ server.on('listening', () => {
 exports.handler = (event, context) => {
     awsServerlessExpress.proxy(serverless, event, context);
 };
-exports.default = server;
+exports.default = serverless;
 //# sourceMappingURL=index.js.map

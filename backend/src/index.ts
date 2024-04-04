@@ -42,13 +42,13 @@ const server: http.Server = http.createServer(app);
 
 const serverless = awsServerlessExpress.createServer(app);
 
-server.listen(PORT);
+serverless.listen(PORT);
 
-server.on('error', (e: Error) => {
+serverless.on('error', (e: Error) => {
   console.log('Error starting server' + e);
 });
 
-server.on('listening', () => {
+serverless.on('listening', () => {
   if (DATABASE_URL) {
     console.log(
       `Server started on port ${PORT} on env ${
@@ -66,4 +66,4 @@ exports.handler = (event: APIGatewayProxyEvent, context: Context) => {
   awsServerlessExpress.proxy(serverless, event, context);
 };
 
-export default server;
+export default serverless;
