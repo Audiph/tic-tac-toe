@@ -8,6 +8,7 @@ import { PLAYER_ONE, GridValue, PLAYER_TWO } from '@/lib/constants';
 const Game = () => {
   const [grids, setGrids] = useState<GridValue[]>(Array(9).fill(null));
   const [playerTurn, setPlayerTurn] = useState<string>(PLAYER_ONE);
+  const [strikeClass, setStrikeClass] = useState<string>('');
 
   const handleGridClick = (index: number) => {
     if (grids[index] !== null) return;
@@ -50,6 +51,7 @@ const Game = () => {
           currentPlayer={playerTurn}
           grids={grids}
           onGridClick={handleGridClick}
+          strikeClass={strikeClass}
         />
       </div>
     </div>

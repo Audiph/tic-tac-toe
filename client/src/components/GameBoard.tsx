@@ -6,9 +6,15 @@ interface GameBoardProps {
   currentPlayer: string;
   grids: GridValue[];
   onGridClick: (index: number) => void;
+  strikeClass: string;
 }
 
-const GameBoard = ({ currentPlayer, grids, onGridClick }: GameBoardProps) => {
+const GameBoard = ({
+  currentPlayer,
+  grids,
+  onGridClick,
+  strikeClass,
+}: GameBoardProps) => {
   return (
     <div className="grid grid-rows-mini-layout grid-cols-mini-layout md:grid-rows-layout md:grid-cols-layout cursor-pointer relative">
       <Grid
@@ -65,7 +71,7 @@ const GameBoard = ({ currentPlayer, grids, onGridClick }: GameBoardProps) => {
         value={grids[8]}
         className=""
       />
-      <Strike />
+      <Strike strikeClass={strikeClass} />
     </div>
   );
 };
