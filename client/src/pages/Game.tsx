@@ -84,7 +84,7 @@ const Game = () => {
           // Reset the confetti after a short delay
           setTimeout(() => {
             dispatch(showConfetti());
-          }, 3000);
+          }, 4000);
 
           if (gridValue1 === playerOne) {
             dispatch(incrementPlayerOneScore());
