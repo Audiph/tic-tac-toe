@@ -2,15 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable-next-line */
 require('dotenv').config();
-const config_1 = require("./var/config");
-const server_1 = require("./server");
+const http = require("http");
 const awsServerlessExpress = require("aws-serverless-express");
-const serverless = awsServerlessExpress.createServer(server_1.default);
-serverless.listen(config_1.PORT);
-serverless.on('error', (e) => {
+const bodyParser = require("body-parser");
+const express = require("express");
+const logger = require("morgan");
+const path = require("path");
+const cors = require("cors");
+const helmet_1 = require("helmet");
+const config_1 = require("./var/config");
+const helpers_1 = require("./helpers");
+const database_1 = require("./database");
+const app = express();
+if (config_1.DATABASE_URL) {
+    (0, database_1.default)(config_1.DATABASE_URL);
+}
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use((0, helmet_1.default)());
+app.use(helmet_1.default.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+app.use(cors());
+const routes = (0, helpers_1.globFiles)(config_1.ROUTES_DIR);
+for (const model of (0, helpers_1.globFiles)(config_1.MODELS_DIR)) {
+    require(path.resolve(model));
+}
+for (const route of routes) {
+    const { default: Route } = require(path.resolve(route));
+    const _ = new Route(app);
+}
+const server = http.createServer(app);
+const serverless = awsServerlessExpress.createServer(app);
+server.listen(config_1.PORT);
+server.on('error', (e) => {
     console.log('Error starting server' + e);
 });
-serverless.on('listening', () => {
+server.on('listening', () => {
     if (config_1.DATABASE_URL) {
         console.log(`Server started on port ${config_1.PORT} on env ${process.env.NODE_ENV || 'dev'} dbcon ${config_1.DATABASE_URL}`);
     }
@@ -21,5 +49,5 @@ serverless.on('listening', () => {
 exports.handler = (event, context) => {
     awsServerlessExpress.proxy(serverless, event, context);
 };
-exports.default = serverless;
+exports.default = { serverless, server };
 //# sourceMappingURL=index.js.map
