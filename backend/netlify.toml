@@ -1,8 +1,13 @@
 [functions]
-  external_node_modules = ["express"]
+  external_node_modules = ["express", "mongodb"]
   node_bundler = "esbuild"
 [[redirects]]
   force = true
-  from = "/api/*"
+  from = "/api/v1/*"
   status = 200
   to = "/.netlify/functions/api/:splat"
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/api/v1/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "https://tic-tac-toe-client-rose.vercel.app"
