@@ -21,10 +21,8 @@ app.use(express_1.default.json());
 app.use((0, helmet_1.default)());
 app.use(helmet_1.default.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 app.use((0, cors_1.default)({
-    origin: 'https://tic-tac-toe-client-rose.vercel.app', // Adjust the origin according to your client app's URL
+    origin: 'https://tic-tac-toe-client-rose.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
 }));
 app.use('/api/v1', games_server_route_1.default);
 app.listen(config_1.PORT || 5000, () => {

@@ -28,7 +28,12 @@ const GameOver = ({ onReset }: { onReset: () => void }) => {
   const handleExit = async (data: Score) => {
     dispatch(showLoading());
     try {
-      const res = await axios.put(`${BASE_URL}/api/v1/game/${data._id}`, data);
+      const res = await axios.put(`${BASE_URL}/api/v1/game/${data._id}`, {
+        body: data,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
       if (!res.data.success) {
         toast({
           title: "Something's wrong",

@@ -18,10 +18,8 @@ api.use(Helmet());
 api.use(Helmet.crossOriginResourcePolicy({ policy: 'same-site' }));
 api.use(
   cors({
-    origin: 'https://tic-tac-toe-client-rose.vercel.app', // Adjust the origin according to your client app's URL
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
   })
 );
 
