@@ -46,6 +46,7 @@ const GameOver = ({ onReset }: { onReset: () => void }) => {
       });
     } finally {
       dispatch(hideLoading());
+      dispatch(hideAlert());
       navigate('/');
     }
   };
