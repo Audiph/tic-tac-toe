@@ -10,4 +10,4 @@
   # Define which paths this specific [[headers]] block will cover.
   for = "/api/v1/*"
     [headers.values]
-    Access-Control-Allow-Origin = "https://tic-tac-toe-client-rose.vercel.app"
+    Access-Control-Allow-Origin = "*"
