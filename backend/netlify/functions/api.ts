@@ -8,12 +8,6 @@ import cors from 'cors';
 import Helmet from 'helmet';
 import dbConnect from '../../src/database';
 
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-};
-
 const api: Application = express();
 
 api.use(logger('dev'));
@@ -28,15 +22,22 @@ api.use('/api/v1', GameRoutes);
 
 const handler = serverless(api);
 
-// Assume dbConnect is an async function to connect to your database
-dbConnect().catch((err) => console.error('Failed to connect to DB', err));
-
-// Instead of trying to modify the handler directly, modify the response within your routes or middleware
-api.use((req, res, next) => {
+api.use((_, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
 
-exports.handler = handler;
+exports.handler = async (event: Object, context: Object) => {
+  try {
+    await dbConnect().catch((err) =>
+      console.error('Failed to connect to DB', err)
+    );
+    const result = await handler(event, context);
+    return result;
+  } catch (error) {
+    console.error('Database connection failed', error);
+    return { statusCode: 500, body: 'Database connection failed' };
+  }
+};
