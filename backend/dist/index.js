@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable-next-line */
 require('dotenv').config();
+const http = require("http");
 const awsServerlessExpress = require("aws-serverless-express");
 const bodyParser = require("body-parser");
 const express = require("express");
@@ -31,12 +32,13 @@ for (const route of routes) {
     const { default: Route } = require(path.resolve(route));
     const _ = new Route(app);
 }
+const server = http.createServer(app);
 const serverless = awsServerlessExpress.createServer(app);
-// serverless.listen(PORT);
-// serverless.on('error', (e: Error) => {
+// server.listen(PORT);
+// server.on('error', (e: Error) => {
 //   console.log('Error starting server' + e);
 // });
-// serverless.on('listening', () => {
+// server.on('listening', () => {
 //   if (DATABASE_URL) {
 //     console.log(
 //       `Server started on port ${PORT} on env ${

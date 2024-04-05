@@ -13,8 +13,6 @@ const connectDB = async (uri: string) => {
 
   if (!cached.promise) {
     const opts = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
       bufferCommands: false,
     };
 

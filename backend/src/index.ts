@@ -38,15 +38,17 @@ for (const route of routes) {
   const _ = new Route(app);
 }
 
+const server = http.createServer(app);
+
 const serverless = awsServerlessExpress.createServer(app);
 
-// serverless.listen(PORT);
+// server.listen(PORT);
 
-// serverless.on('error', (e: Error) => {
+// server.on('error', (e: Error) => {
 //   console.log('Error starting server' + e);
 // });
 
-// serverless.on('listening', () => {
+// server.on('listening', () => {
 //   if (DATABASE_URL) {
 //     console.log(
 //       `Server started on port ${PORT} on env ${

@@ -11,8 +11,6 @@ const connectDB = async (uri) => {
     }
     if (!cached.promise) {
         const opts = {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
             bufferCommands: false,
         };
         cached.promise = mongoose_1.default.connect(uri, opts).then((mongoose) => {
