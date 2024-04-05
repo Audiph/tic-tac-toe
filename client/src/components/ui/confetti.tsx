@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { SHAPES } from '../../lib/constants';
 import { generateRandomColor } from '../../lib/utils';
 import { RootState } from '../../redux/store';
