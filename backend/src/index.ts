@@ -17,7 +17,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(Helmet());
 app.use(Helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://tic-tac-toe-client-rose.vercel.app', // Adjust the origin according to your client app's URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+);
 
 app.use('/api/v1', GameRoutes);
 
