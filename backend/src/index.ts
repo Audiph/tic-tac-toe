@@ -11,12 +11,12 @@ import * as cors from 'cors';
 import Helmet from 'helmet';
 import { DATABASE_URL, PORT, MODELS_DIR, ROUTES_DIR } from './var/config';
 import { globFiles } from './helpers';
-import connect from './database';
+import dbConnect from './database';
 
 const app: express.Express = express();
 
 if (DATABASE_URL) {
-  connect(DATABASE_URL);
+  dbConnect(DATABASE_URL);
 }
 
 app.use(logger('dev'));

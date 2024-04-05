@@ -1,9 +1,29 @@
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-export default (uri: string) => {
-  try {
-    mongoose.connect(uri);
-  } catch (e) {
-    console.log('Error connecting to mongo db', e.message);
+let cached = global.mongooseConn;
+
+if (!cached) {
+  cached = global.mongooseConn = { conn: null, promise: null };
+}
+
+const connectDB = async (uri: string) => {
+  if (cached.conn) {
+    return cached.conn;
   }
+
+  if (!cached.promise) {
+    const opts = {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      bufferCommands: false,
+    };
+
+    cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
 };
+
+export default connectDB;
