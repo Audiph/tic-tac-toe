@@ -11,3 +11,4 @@
   for = "/api/v1/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
