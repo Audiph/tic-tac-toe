@@ -1,27 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
+import { DATABASE_URL } from '../var/config';
 
-let cached = global.mongooseConn;
+// mongoose.set('strictQuery', false);
 
-if (!cached) {
-  cached = global.mongooseConn = { conn: null, promise: null };
-}
-
-const connectDB = async (uri: string) => {
-  if (cached.conn) {
-    return cached.conn;
+const connectDB = async () => {
+  try {
+    await mongoose.connect(
+      DATABASE_URL as string,
+      {
+        bufferCommands: false,
+      } as ConnectOptions
+    );
+    console.log('Database is connected');
+  } catch (error: any) {
+    console.log(error.message);
   }
-
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(uri, opts).then((mongoose) => {
-      return mongoose;
-    });
-  }
-  cached.conn = await cached.promise;
-  return cached.conn;
 };
 
 export default connectDB;

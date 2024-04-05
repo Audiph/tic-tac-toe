@@ -1,59 +1,34 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable-next-line */
 require('dotenv').config();
-const http = require("http");
-const awsServerlessExpress = require("aws-serverless-express");
-const bodyParser = require("body-parser");
-const express = require("express");
-const logger = require("morgan");
-const path = require("path");
-const cors = require("cors");
-const helmet_1 = require("helmet");
+const body_parser_1 = __importDefault(require("body-parser"));
+const express_1 = __importDefault(require("express"));
+const morgan_1 = __importDefault(require("morgan"));
+const cors_1 = __importDefault(require("cors"));
+const helmet_1 = __importDefault(require("helmet"));
 const config_1 = require("./var/config");
-const helpers_1 = require("./helpers");
-const database_1 = require("./database");
-const app = express();
-if (config_1.DATABASE_URL) {
-    (0, database_1.default)(config_1.DATABASE_URL);
-}
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
+const database_1 = __importDefault(require("./database"));
+const games_server_route_1 = __importDefault(require("./routes/games.server.route"));
+const app = (0, express_1.default)();
+app.use((0, morgan_1.default)('dev'));
+app.use(body_parser_1.default.json());
+app.use(body_parser_1.default.urlencoded({ extended: false }));
+app.use(express_1.default.json());
 app.use((0, helmet_1.default)());
 app.use(helmet_1.default.crossOriginResourcePolicy({ policy: 'cross-origin' }));
-app.use(cors());
-const routes = (0, helpers_1.globFiles)(config_1.ROUTES_DIR);
-for (const model of (0, helpers_1.globFiles)(config_1.MODELS_DIR)) {
-    require(path.resolve(model));
-}
-for (const route of routes) {
-    const { default: Route } = require(path.resolve(route));
-    const _ = new Route(app);
-    app.use(_);
-}
-const server = http.createServer(app);
-const serverless = awsServerlessExpress.createServer(app);
-// server.listen(PORT);
-// server.on('error', (e: Error) => {
-//   console.log('Error starting server' + e);
-// });
-// server.on('listening', () => {
-//   if (DATABASE_URL) {
-//     console.log(
-//       `Server started on port ${PORT} on env ${
-//         process.env.NODE_ENV || 'dev'
-//       } dbcon ${DATABASE_URL}`
-//     );
-//   } else {
-//     console.log(
-//       `Server started on port ${PORT} on env ${process.env.NODE_ENV || 'dev'}`
-//     );
-//   }
-// });
-exports.handler = (event, context) => {
-    awsServerlessExpress.proxy(serverless, event, context);
-};
-exports.default = serverless;
+app.use((0, cors_1.default)());
+app.use('/api/v1', games_server_route_1.default);
+app.listen(config_1.PORT || 5000, () => {
+    if (config_1.DATABASE_URL) {
+        (0, database_1.default)();
+        console.log(`Server started on port ${config_1.PORT} on env ${process.env.NODE_ENV || 'dev'}`);
+    }
+    else {
+        console.log(`Server started on port ${config_1.PORT} on env ${process.env.NODE_ENV || 'dev'}`);
+    }
+});
 //# sourceMappingURL=index.js.map

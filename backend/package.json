@@ -2,22 +2,13 @@
   "name": "game-server",
   "version": "1.0.0",
   "description": "backend service for tic-tac-toe",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
-    "dev": "npm run build && concurrently --kill-others \"tsc -w -p src\" \"nodemon dist/index.js -e ts\"",
-    "start": "node dist/index.js",
-    "build": "tsc -p src",
-    "build:rimraf": "rimraf dist && tsc -p src",
+    "start": "nodemon src/index.ts",
+    "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
-    "build:docker": "docker build -t audiph/tic-tac-toe-server .",
-    "docker:compose": "docker-compose up"
+    "add-build": "git add dist"
   },
-  "pre-commit": [
-    "ts.check",
-    "build:rimraf",
-    "add-build"
-  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -28,8 +19,8 @@
     "@types/lodash": "^4.17.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.12.4",
-    "concurrently": "^8.2.2",
     "nodemon": "^3.1.0",
+    "pre-commit": "^1.2.2",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
@@ -43,6 +34,7 @@
     "helmet": "^7.1.0",
     "lodash": "^4.17.21",
     "mongoose": "^8.3.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "ts-node-dev": "^2.0.0"
   }
 }

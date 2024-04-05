@@ -1,12 +1,18 @@
-import { Express } from 'express';
-import { gamesController } from '../controllers/games.server.controller';
+import express from 'express';
+import {
+  createGame,
+  deleteGame,
+  getAllGames,
+  getGameById,
+  updateGame,
+} from '../controllers/games.server.controller';
 
-export default class GamesRouter {
-  constructor(app: Express) {
-    app.get('/api/v1/games', gamesController.getAllGames);
-    app.post('/api/v1/game', gamesController.createGame);
-    app.put('/api/v1/game/:id', gamesController.updateGame);
-    app.delete('/api/v1/game/:id', gamesController.deleteGame);
-    app.get('/api/v1/:id', gamesController.getGameById);
-  }
-}
+const router = express.Router();
+
+router.get('/games', getAllGames);
+router.post('/game', createGame);
+router.put('/game/:id', updateGame);
+router.delete('/game/:id', deleteGame);
+router.get('/:id', getGameById);
+
+export default router;
