@@ -63,9 +63,9 @@ const GameOver = ({ onReset }: { onReset: () => void }) => {
         ) : (
           <AlertDialogHeader>
             <AlertDialogTitle className="place-self-center">
-              <h1 className="scroll-m-20 mb-4 mx-8 text-4xl font-extrabold tracking-tight lg:text-5xl">
+              <span className="scroll-m-20 mb-4 mx-8 text-4xl font-extrabold tracking-tight lg:text-5xl">
                 {winner === '' ? "It's a Draw!" : `${winner} won!`}
-              </h1>
+              </span>
             </AlertDialogTitle>
             <AlertDialogDescription>
               You may choose to <strong>Exit</strong> to finish the game or{' '}

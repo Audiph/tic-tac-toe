@@ -21,6 +21,7 @@ app.use(
   cors({
     origin: 'https://tic-tac-toe-client-rose.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    credentials: false,
   })
 );
 
