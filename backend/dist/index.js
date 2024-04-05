@@ -31,6 +31,7 @@ for (const model of (0, helpers_1.globFiles)(config_1.MODELS_DIR)) {
 for (const route of routes) {
     const { default: Route } = require(path.resolve(route));
     const _ = new Route(app);
+    app.use(_);
 }
 const server = http.createServer(app);
 const serverless = awsServerlessExpress.createServer(app);

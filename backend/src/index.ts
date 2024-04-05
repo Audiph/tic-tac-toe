@@ -36,6 +36,7 @@ for (const model of globFiles(MODELS_DIR)) {
 for (const route of routes) {
   const { default: Route } = require(path.resolve(route));
   const _ = new Route(app);
+  app.use(_);
 }
 
 const server = http.createServer(app);
