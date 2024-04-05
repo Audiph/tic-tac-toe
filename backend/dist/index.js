@@ -19,7 +19,7 @@ app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 app.use((0, helmet_1.default)());
-app.use(helmet_1.default.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+app.use(helmet_1.default.crossOriginResourcePolicy({ policy: 'same-site' }));
 app.use((0, cors_1.default)());
 app.use('/api/v1', games_server_route_1.default);
 app.listen(config_1.PORT || 5000, () => {

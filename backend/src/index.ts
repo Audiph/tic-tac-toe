@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(Helmet());
-app.use(Helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
+app.use(Helmet.crossOriginResourcePolicy({ policy: 'same-site' }));
 app.use(cors());
 
 app.use('/api/v1', GameRoutes);
