@@ -24,7 +24,7 @@ import { SubmitHandler } from 'react-hook-form';
 import { FormInput } from '@/lib/constants';
 import PlayersForm from '@/components/PlayersForm';
 import { useToast } from '@/components/ui/use-toast';
-import { getAllGames, setGame } from '@/redux/gameSlice';
+import { getAllGames, setGame, setWinner } from '@/redux/gameSlice';
 import { hideLoading, showLoading } from '@/redux/utilSlice';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -64,6 +64,7 @@ const Landing = () => {
 
       const { _id }: Score = res.data.game;
 
+      dispatch(setWinner(''));
       dispatch(setGame(res.data.game));
       dispatch(hideLoading());
       navigate(`/game/${_id}`);

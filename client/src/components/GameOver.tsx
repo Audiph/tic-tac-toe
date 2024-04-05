@@ -37,25 +37,25 @@ const GameOver = ({ onReset }: { onReset: () => void }) => {
         dispatch(hideLoading());
         return;
       }
-
-      dispatch(showLoading());
       dispatch(setGame(null));
       dispatch(setWinner(''));
     } catch (error) {
-      dispatch(hideLoading());
       toast({
         title: "Something's wrong!",
         description: "There's an error while updating result.",
       });
+    } finally {
+      dispatch(hideLoading());
+      navigate('/');
     }
   };
 
   return (
     <AlertDialog open={alert}>
-      {loading ? (
-        <Loading size="10" />
-      ) : (
-        <AlertDialogContent>
+      <AlertDialogContent>
+        {loading ? (
+          <Loading size="10" />
+        ) : (
           <AlertDialogHeader>
             <AlertDialogTitle className="place-self-center">
               <h1 className="scroll-m-20 mb-4 mx-8 text-4xl font-extrabold tracking-tight lg:text-5xl">
@@ -67,28 +67,25 @@ const GameOver = ({ onReset }: { onReset: () => void }) => {
               <strong>Rematch</strong> to play again.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="justify-self-center gap-4 md:gap-12">
-            <AlertDialogCancel
-              disabled={loading}
-              onClick={() => {
-                handleExit(game!);
-                navigate('/');
-              }}
-            >
-              Exit
-            </AlertDialogCancel>
-            <AlertDialogAction
-              disabled={loading}
-              onClick={() => {
-                dispatch(hideAlert());
-                onReset();
-              }}
-            >
-              Rematch
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      )}
+        )}
+        <AlertDialogFooter className="justify-self-center gap-4 md:gap-12">
+          <AlertDialogCancel
+            disabled={loading}
+            onClick={() => handleExit(game!)}
+          >
+            Exit
+          </AlertDialogCancel>
+          <AlertDialogAction
+            disabled={loading}
+            onClick={() => {
+              dispatch(hideAlert());
+              onReset();
+            }}
+          >
+            Rematch
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
     </AlertDialog>
   );
 };
